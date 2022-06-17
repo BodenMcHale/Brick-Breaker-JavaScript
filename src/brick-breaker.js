@@ -290,9 +290,6 @@ function keyDownHandler(e)
 		isPaused = !isPaused;
 	}
 
-	if (isPaused)
-		return;
-
 	// Right button
 	if (e.keyCode == 39 || e.keyCode == 68)
 	{
@@ -304,14 +301,11 @@ function keyDownHandler(e)
 	{
 		leftPressed = true;
 	}
-
-
 }
 
 function keyUpHandler(e)
 {
-	if (isPaused)
-	return;
+
 
 	// Right button
 	if(e.keyCode == 39 || e.keyCode == 68)

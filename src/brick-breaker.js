@@ -34,6 +34,9 @@ let bricks=[];
 
 let pixelOffset = 1;
 
+let deathSFX = new Audio('audio/death.mp3');
+let collisionSFX = new Audio('audio/collision.mp3');
+
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
@@ -167,7 +170,18 @@ function collisonDetection()
 		}
 	}
 
-	// Paddle Wall
+	// Ball collision with bottom of screen
+	if (y + dy > canvas.height + paddleHeight + (ballRadius * 2))
+	{
+		lives--;
+
+		x = canvas.width / 2;
+		y = canvas.height - 30;
+		dx = 2;
+		dy = -2;
+	}
+
+	// Paddle collision with Wall
 	if(rightPressed && paddleX < canvas.width - paddleWidth)
 	{
 		paddleX += 5;
@@ -177,21 +191,11 @@ function collisonDetection()
 		paddleX -= 5;
 	}
 
-	// Paddle
+	// Paddle collision with Ball
 	if(x > paddleX && x < paddleX + paddleWidth && y + dy > canvas.height - paddleHeight - ballRadius + pixelOffset)
 	{
+		PaddleSFX.play();
 		dy -= dy + 2;
-	}
-
-	// Bottom of screen
-	if (y + dy > canvas.height + paddleHeight + (ballRadius * 2))
-	{
-		lives--;
-
-		x = canvas.width / 2;
-		y = canvas.height - 30;
-		dx = 2;
-		dy = -2;
 	}
 }
 

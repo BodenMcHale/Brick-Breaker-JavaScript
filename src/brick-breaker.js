@@ -1,6 +1,8 @@
 // Set random angle on start
 // Round edges of boxes
 // Bug if the ball goes under the paddle it'll come back up
+// Add header file
+// Add another screenshot to github
 
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");

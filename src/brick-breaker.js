@@ -24,6 +24,10 @@
     - Random angle on start
     - More sfx
 	- Round edges of rectangles
+	- Mute button 
+	- Watermark hyperlink
+	- Title and desciption
+	- Controls
 	- Bug: If the ball goes under the paddle it pops back up
 
     Author

@@ -69,27 +69,38 @@ let pixelOffset = 1;
 
 let isPaused = false;
 
+//let mute = document.getElementById('muteCanvasCheckbox').checked;
+
 function playDeath()
 {
-	let deathSFX = new Array('audio/death.mp3', 'audio/death2.mp3');
+	if (!mute)
+	{
+		let deathSFX = new Array('audio/death.mp3', 'audio/death2.mp3');
 
-	let randomSFX = deathSFX[Math.floor(Math.random() * deathSFX.length)];
-
-	let chosenDeathSFX = new Audio(randomSFX);
-
-	chosenDeathSFX.play();
+		let randomSFX = deathSFX[Math.floor(Math.random() * deathSFX.length)];
+	
+		let chosenDeathSFX = new Audio(randomSFX);
+	
+		chosenDeathSFX.play();
+	}
 }
 
 function playBrickCollision()
 {
-	let brickCollisionSFX = new Audio('audio/brick-collision.mp3');
-	brickCollisionSFX.play();
+	if (!mute)
+	{
+		let brickCollisionSFX = new Audio('audio/brick-collision.mp3');
+		brickCollisionSFX.play();
+	}
 }
 
 function playWallCollision()
 {
-	let wallCollisionSFX = new Audio('audio/wall-collision.mp3');
-	wallCollisionSFX.play();
+	if (!mute)
+	{
+		let wallCollisionSFX = new Audio('audio/wall-collision.mp3');
+		wallCollisionSFX.play();
+	}
 }
 
 function collisonDetection()
@@ -333,6 +344,8 @@ function draw()
 	drawScore();
 	collisonDetection();
 
+	mute = document.getElementById('muteCanvasCheckbox').checked;
+	console.log(mute);
 	// Check if the player is dead
 	if(lives <= 0)
 	{

@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	    <meta charset="UTF-8">
-	    <title>Brick Breaker</title>
-    </head>
-    <body bgcolor="#000000">
-        <canvas id="canvas1" width="600px" height="480px"></canvas>
-        <script src="brick-breaker.js"></script>
-    </body>
-</html>
-
-<html>
-    <head>
+        <meta charset="UTF-8">
         <title>Brick Breaker</title>
     </head>
     <body bgcolor="#000000">
-        <div id="contents" style="position:relative; padding-left:10px">
-            <h3 style="font-family: 'Courier New', Courier, monospace;">Score: <span id="score"></span> </h3>
-            <h3 style="font-family: 'Courier New', Courier, monospace;">Lives: <span id="deaths"></span> </h3>
-            <h3 style="font-family: 'Courier New', Courier, monospace;">Max score: <span id="max_score"></span> </h3>
+        <div>
+            <canvas id="canvas1" width="600px" height="480px"></canvas>
+            <script src="brick-breaker.js"></script>
+        </div>
+        <div id="contents" style="position:relative; padding-bottom:1px; padding-left:10px">
+            <a href="https://www.lostrabbitdigital.com" style="font-family: 'Courier New', Courier, monospace;">Lost Rabbit Digital</a>
             <p style="font-family: 'Courier New', Courier, monospace;">Move with the Arrow Keys or A/D</p>
             <p style="font-family: 'Courier New', Courier, monospace;">Pause and resume with 'Enter'</p>
+            <p style="font-family: 'Courier New', Courier, monospace;">Toggle audio with 'Shift'</p>
             <input type="checkbox" id="muteCanvasCheckbox" name="muteCanvas" value="mute">
             <label for="loopCanvas" style="font-family:'Courier New', Courier, monospace;"> Mute</label><br>
-            <a href="https://www.lostrabbitdigital.com" style="font-family: 'Courier New', Courier, monospace;">Lost Rabbit Digital</a>
+            <h3 style="font-family: 'Courier New', Courier, monospace;">Score: <span id="score"></span> </h3>
+            <h3 style="font-family: 'Courier New', Courier, monospace;">Max score: <span id="max_score"></span> </h3>
+            <h3 style="font-family: 'Courier New', Courier, monospace;">Deaths: <span id="deaths"></span> </h3>
         </div>
-        <div id="stage" style="position:relative"></div>
     </body>
-        <canvas id="canvas1" width="600px" height="480px"></canvas>
-        <script src="brick-breaker.js"></script>
 </html>

@@ -3,8 +3,6 @@
 // Bug if the ball goes under the paddle it'll come back up
 // Add header file
 // Add another screenshot to github
-// Different wall sounds, randomise it, at least three
-// Different block sounds, randomise it, at least three
 // Update github to include audio in readme
 
 const canvas = document.getElementById("canvas1");
@@ -37,21 +35,28 @@ let bricks=[];
 
 let pixelOffset = 1;
 
+// Sound effects
 function playDeath()
 {
-	let deathSFX = new Audio('audio/death.mp3', 'audio/death2.mp3');
-	deathSFX.play();
+	let deathSFX = new Array('audio/death.mp3', 'audio/death2.mp3');
+
+	let randomSFX = deathSFX[Math.floor(Math.random() * deathSFX.length)];
+
+	let chosenDeathSFX = new Audio(randomSFX);
+
+	chosenDeathSFX.play();
 }
 
-function playCollision()
+function playBrickCollision()
 {
-	let collisionSFX = new Array('audio/collision.mp3', 'audio/collsion.mp3');
+	let brickCollisionSFX = new Audio('audio/brick-collision.mp3');
+	brickCollisionSFX.play();
+}
 
-	let randomSFX = collisionSFX[Math.floor(Math.random() * collisionSFX.length)];
-
-	let chosenCollisionSFX = new Audio(randomSFX);
-
-	chosenCollisionSFX.play();
+function playWallCollision()
+{
+	let wallCollisionSFX = new Audio('audio/wall-collision.mp3');
+	wallCollisionSFX.play();
 }
 
 document.addEventListener("keydown", keyDownHandler);
@@ -113,21 +118,21 @@ function collisonDetection()
 	// Collision with right wall
 	if (x + dx > canvas.width - ballRadius)
 	{	
-		playCollision();
 		dx -= dx + 2;
+		playWallCollision();
 	}
 	// Collision with left wall
 	if (x + dx < ballRadius)
 	{
-		playCollision();
 		dx -= dx - 2;
+		playWallCollision();
 	}
 
 	// Collision with ceiling
 	if (y + dy < ballRadius)
 	{
-		playCollision();
 		dy -= dy - 2;
+		playWallCollision();
 	}	
 
 	// Collision with bricks
@@ -145,7 +150,7 @@ function collisonDetection()
 					dy -= dy - 2;
 					b.status = 0;
 					score++;
-					playCollision();
+					playBrickCollision();
 
 					if(brickColumnCount * brickRowCount == score)
 					{
@@ -161,7 +166,7 @@ function collisonDetection()
 					dy -= dy + 2;
 					b.status = 0;
 					score++;
-					playCollision();
+					playBrickCollision();
 
 					if(brickColumnCount * brickRowCount == score)
 					{
@@ -176,7 +181,7 @@ function collisonDetection()
 					dx -= dx + 2;
 					b.status = 0;
 					score++;
-					playCollision();
+					playBrickCollision();
 
 					if(brickColumnCount * brickRowCount == score)
 					{
@@ -191,7 +196,7 @@ function collisonDetection()
 					dx -= dx - 2;
 					b.status = 0;
 					score++;
-					playCollision();
+					playBrickCollision();
 
 					if(brickColumnCount * brickRowCount == score)
 					{
@@ -228,7 +233,7 @@ function collisonDetection()
 	// Paddle collision with Ball
 	if(x > paddleX && x < paddleX + paddleWidth && y + dy > canvas.height - paddleHeight - ballRadius + pixelOffset)
 	{
-		playCollision();
+		playBrickCollision();
 		dy -= dy + 2;
 	}
 }

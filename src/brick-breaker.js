@@ -3,6 +3,9 @@
 // Bug if the ball goes under the paddle it'll come back up
 // Add header file
 // Add another screenshot to github
+// Different wall sounds
+// Different block sounds, randomise it
+// Update github to include audio in readme
 
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
@@ -34,8 +37,17 @@ let bricks=[];
 
 let pixelOffset = 1;
 
-let deathSFX = new Audio('audio/death.mp3');
-let collisionSFX = new Audio('audio/collision.mp3');
+function playDeath()
+{
+	let deathSFX = new Audio('audio/death.mp3');
+	deathSFX.play();
+}
+
+function playCollision()
+{
+	let collisionSFX = new Audio('audio/collision.mp3');
+	collisionSFX.play();
+}
 
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
@@ -95,15 +107,23 @@ function collisonDetection()
 {
 	// Collision with right wall
 	if (x + dx > canvas.width - ballRadius)
+	{	
+		playCollision();
 		dx -= dx + 2;
-
+	}
 	// Collision with left wall
 	if (x + dx < ballRadius)
+	{
+		playCollision();
 		dx -= dx - 2;
+	}
 
 	// Collision with ceiling
 	if (y + dy < ballRadius)
+	{
+		playCollision();
 		dy -= dy - 2;
+	}	
 
 	// Collision with bricks
 	for(c = 0; c < brickColumnCount; c++)
@@ -120,9 +140,11 @@ function collisonDetection()
 					dy -= dy - 2;
 					b.status = 0;
 					score++;
+					playCollision();
 
 					if(brickColumnCount * brickRowCount == score)
 					{
+						playDeath();
 						document.location.reload();
 					}
 
@@ -134,9 +156,11 @@ function collisonDetection()
 					dy -= dy + 2;
 					b.status = 0;
 					score++;
+					playCollision();
 
 					if(brickColumnCount * brickRowCount == score)
 					{
+						playDeath();
 						document.location.reload();
 					}
 				}		
@@ -147,9 +171,11 @@ function collisonDetection()
 					dx -= dx + 2;
 					b.status = 0;
 					score++;
+					playCollision();
 
 					if(brickColumnCount * brickRowCount == score)
 					{
+						playDeath();
 						document.location.reload();
 					}
 				}	
@@ -160,9 +186,11 @@ function collisonDetection()
 					dx -= dx - 2;
 					b.status = 0;
 					score++;
+					playCollision();
 
 					if(brickColumnCount * brickRowCount == score)
 					{
+						playDeath();
 						document.location.reload();
 					}
 				}			
@@ -174,6 +202,7 @@ function collisonDetection()
 	if (y + dy > canvas.height + paddleHeight + (ballRadius * 2))
 	{
 		lives--;
+		playDeath();
 
 		x = canvas.width / 2;
 		y = canvas.height - 30;
@@ -194,7 +223,7 @@ function collisonDetection()
 	// Paddle collision with Ball
 	if(x > paddleX && x < paddleX + paddleWidth && y + dy > canvas.height - paddleHeight - ballRadius + pixelOffset)
 	{
-		PaddleSFX.play();
+		playCollision();
 		dy -= dy + 2;
 	}
 }

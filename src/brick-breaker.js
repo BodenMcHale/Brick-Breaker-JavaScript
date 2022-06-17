@@ -3,8 +3,8 @@
 // Bug if the ball goes under the paddle it'll come back up
 // Add header file
 // Add another screenshot to github
-// Different wall sounds
-// Different block sounds, randomise it
+// Different wall sounds, randomise it, at least three
+// Different block sounds, randomise it, at least three
 // Update github to include audio in readme
 
 const canvas = document.getElementById("canvas1");
@@ -39,14 +39,19 @@ let pixelOffset = 1;
 
 function playDeath()
 {
-	let deathSFX = new Audio('audio/death.mp3');
+	let deathSFX = new Audio('audio/death.mp3', 'audio/death2.mp3');
 	deathSFX.play();
 }
 
 function playCollision()
 {
-	let collisionSFX = new Audio('audio/collision.mp3');
-	collisionSFX.play();
+	let collisionSFX = new Array('audio/collision.mp3', 'audio/collsion.mp3');
+
+	let randomSFX = collisionSFX[Math.floor(Math.random() * collisionSFX.length)];
+
+	let chosenCollisionSFX = new Audio(randomSFX);
+
+	chosenCollisionSFX.play();
 }
 
 document.addEventListener("keydown", keyDownHandler);

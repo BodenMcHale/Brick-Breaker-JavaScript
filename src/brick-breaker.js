@@ -1,6 +1,5 @@
 // Set random angle on start
 // Round edges of boxes
-// Fix the ground bug
 
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
@@ -27,6 +26,8 @@ let score = 0;
 let lives = 3;
 let bricks=[];
 
+let pixelOffset = 1;
+
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
@@ -43,7 +44,7 @@ function drawBricks()
 {
 	for(c = 0; c < brickColumnCount; c++)
 	{
-		for(r = 0;r < brickRowCount; r++)
+		for(r = 0; r < brickRowCount; r++)
 		{
 			if(bricks[c][r].status == 1)
 			{
@@ -135,7 +136,7 @@ function collisonDetection()
 			if(b.status == 1)
 			{
 				// Bottom 
-				if(x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight + ballRadius)
+				if(x + dx > b.x && x + dx < b.x + brickWidth && y + dy > b.y && y + dy < b.y + brickHeight + ballRadius - pixelOffset)
 				{
 					dy -= dy - 2;
 					b.status = 0;
@@ -149,7 +150,7 @@ function collisonDetection()
 				}
 
 				// Top
-				if(x > b.x && x < b.x + brickWidth && y > b.y - ballRadius && y < b.y + brickHeight)
+				if(x + dx > b.x && x + dx < b.x + brickWidth && y + dy > b.y - ballRadius + pixelOffset && y + dy < b.y + brickHeight)
 				{
 					dy -= dy + 2;
 					b.status = 0;
@@ -162,7 +163,7 @@ function collisonDetection()
 				}		
 
 				// Left
-				if(x > b.x - ballRadius && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight)
+				if(x + dx > b.x - ballRadius + pixelOffset && x + dx < b.x + brickWidth && y + dy > b.y && y + dy < b.y + brickHeight)
 				{
 					dx -= dx + 2;
 					b.status = 0;
@@ -175,7 +176,7 @@ function collisonDetection()
 				}	
 
 				// Right
-				if(x > b.x && x < b.x + brickWidth + ballRadius && y > b.y && y < b.y + brickHeight)
+				if(x + dx > b.x && x + dx < b.x + brickWidth + ballRadius - pixelOffset && y + dy > b.y && y + dy < b.y + brickHeight)
 				{
 					dx -= dx - 2;
 					b.status = 0;
@@ -190,7 +191,7 @@ function collisonDetection()
 		}
 	}
 
-	// Paddle Collisions
+	// Paddle Wall
 	if(rightPressed && paddleX < canvas.width - paddleWidth)
 	{
 		paddleX += 5;
@@ -200,22 +201,21 @@ function collisonDetection()
 		paddleX -= 5;
 	}
 
-	// Bottom of the screen
-	if(y + dy > canvas.height - paddleHeight - ballRadius)
+	// Paddle
+	if(x > paddleX && x < paddleX + paddleWidth && y + dy > canvas.height - paddleHeight - ballRadius + pixelOffset)
 	{
-		if(x > paddleX && x < paddleX + paddleWidth)
-		{
-			dy -= dy + 2;
-		}
-		else 
-        {
-			lives--;
-            
-			if(!lives)
-			{
-		    	document.location.reload();
-			}
-	    }
+		dy -= dy + 2;
+	}
+
+	// Bottom of screen
+	if (y + dy > canvas.height + paddleHeight + (ballRadius * 2))
+	{
+		lives--;
+
+		x = canvas.width / 2;
+		y = canvas.height - 30;
+		dx = 2;
+		dy = -2;
 	}
 }
 
@@ -243,12 +243,11 @@ function draw()
 	drawScore();
 	collisonDetection();
 
-	if (y + dy < ballRadius)
-    {
-		dy -= dy;
-    }
-	
-
+	// Check if the player is dead
+	if(lives <= 0)
+	{
+		document.location.reload();
+	}
 
 	x += dx;
 	y += dy;

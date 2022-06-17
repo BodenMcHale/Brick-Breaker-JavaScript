@@ -23,8 +23,6 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     - Random angle on start
     - More sfx
-	- Round edges of rectangles
-	- Mute button 
 	- Bug: If the ball goes under the paddle it pops back up
 
     Author
@@ -42,7 +40,7 @@ document.addEventListener("keyup", keyUpHandler);
 
 let x = canvas.width / 2;
 let y = canvas.height - 30;
-let dx = 2;
+let dx = 0;
 let dy = -2;
 const ballRadius = 5;
 
@@ -73,6 +71,9 @@ let isPaused = false;
 let brickColor = '#8F00FF';
 let paddleColor = '#e0bb00';
 let ballColor = '#e0bb00';
+
+// Randomise the direction of the ball at the start of the game
+setBallDirection();
 
 function playDeath()
 {
@@ -112,7 +113,6 @@ function reset()
 	{
 		x = canvas.width / 2;
 		y = canvas.height - 30;
-		dx = 2;
 		dy = -2;
 		score = 0;
 		lives = 3;
@@ -144,14 +144,72 @@ function reset()
 	{
 		x = canvas.width / 2;
 		y = canvas.height - 30;
-		dx = 2;
 		dy = -2;
 		score = 0;
 	}
 }
 
+function setBallDirection()
+{
+	let directions = [-4, -3, -2, -1, 1, 2, 3, 4];
+
+	let randomDirection = directions[Math.floor(Math.random() * directions.length)];
+
+	dx = randomDirection;
+}
+
+function setBallDirectionPositive()
+{
+	let directions = [1, 2, 3, 4];
+
+	let randomDirection = directions[Math.floor(Math.random() * directions.length)];
+
+	dx = randomDirection;
+}
+
+function setBallDirectionNegative()
+{
+	let directions = [-4, -3, -2, -1];
+
+	let randomDirection = directions[Math.floor(Math.random() * directions.length)];
+
+	dx = randomDirection;
+}
+
 function collisonDetection()
 {
+	// Paddle collision with Ball
+	if(x > paddleX && x < paddleX + paddleWidth && y + dy > canvas.height - paddleHeight - ballRadius - pixelOffset)
+	{
+		playBrickCollision();
+		if (dx < 0)
+		{
+			setBallDirectionNegative();
+		}
+
+		if (dx > 0)
+		{
+			setBallDirectionPositive();
+		}
+
+		dy -= dy + 2;
+	}
+
+	// Collision with ceiling
+	if (y + dy < ballRadius)
+	{
+		dy -= dy - 2;
+		playWallCollision();
+	}
+
+	// Ball collision with bottom of screen
+	if (y + dy > canvas.height + paddleHeight + (ballRadius * 2))
+	{			
+		lives--;
+		playDeath();	
+		reset();
+	}
+
 	// Collision with right wall
 	if (x + dx > canvas.width - ballRadius)
 	{	
@@ -164,13 +222,6 @@ function collisonDetection()
 		dx -= dx - 2;
 		playWallCollision();
 	}
-
-	// Collision with ceiling
-	if (y + dy < ballRadius)
-	{
-		dy -= dy - 2;
-		playWallCollision();
-	}	
 
 	// Collision with bricks
 	for(c = 0; c < brickColumnCount; c++)
@@ -245,30 +296,12 @@ function collisonDetection()
 		}
 	}
 
-	// Ball collision with bottom of screen
-	if (y + dy > canvas.height + paddleHeight + (ballRadius * 2))
-	{
-		lives--;
-		playDeath();	
-		reset();
-	}
-
 	// Paddle collision with Wall
 	if(rightPressed && paddleX < canvas.width - paddleWidth)
-	{
 		paddleX += 5;
-	}
-	else if(leftPressed && paddleX > 0)
-	{
+	
+	if(leftPressed && paddleX > 0)
 		paddleX -= 5;
-	}
-
-	// Paddle collision with Ball
-	if(x > paddleX && x < paddleX + paddleWidth && y + dy > canvas.height - paddleHeight - ballRadius + pixelOffset)
-	{
-		playBrickCollision();
-		dy -= dy + 2;
-	}
 }
 
 for(c = 0; c < brickColumnCount; c++)

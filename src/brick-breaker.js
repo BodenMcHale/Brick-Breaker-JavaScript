@@ -25,9 +25,6 @@
     - More sfx
 	- Round edges of rectangles
 	- Mute button 
-	- Watermark hyperlink
-	- Title and desciption
-	- Controls
 	- Bug: If the ball goes under the paddle it pops back up
 
     Author
@@ -69,6 +66,8 @@ let lives = 3;
 let bricks=[];
 
 let pixelOffset = 1;
+
+let isPaused = false;
 
 function playDeath()
 {
@@ -285,6 +284,15 @@ function drawLives()
 
 function keyDownHandler(e)
 {
+	// Entter button
+	if (e.keyCode == 13)
+	{
+		isPaused = !isPaused;
+	}
+
+	if (isPaused)
+		return;
+
 	// Right button
 	if (e.keyCode == 39 || e.keyCode == 68)
 	{
@@ -296,10 +304,15 @@ function keyDownHandler(e)
 	{
 		leftPressed = true;
 	}
+
+
 }
 
 function keyUpHandler(e)
 {
+	if (isPaused)
+	return;
+
 	// Right button
 	if(e.keyCode == 39 || e.keyCode == 68)
 	{
@@ -315,6 +328,9 @@ function keyUpHandler(e)
 
 function draw()
 {
+	if (isPaused)
+		return;
+
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 	drawBricks();
 	drawLives();

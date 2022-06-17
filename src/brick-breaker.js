@@ -1,5 +1,6 @@
 // Set random angle on start
 // Round edges of boxes
+// Bug if the ball goes under the paddle it'll come back up
 
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
@@ -9,12 +10,14 @@ let y = canvas.height - 30;
 let dx = 2;
 let dy = -2;
 const ballRadius = 5;
+
 const paddleHeight = 10;
 const paddleWidth = 80;
 let paddleX = (canvas.width - paddleWidth) / 2;
 let paddleY = (canvas.height - paddleHeight) / 2;
 let rightPressed = false;
 let leftPressed = false;
+
 const brickRowCount = 8;
 const brickColumnCount = 6;
 const brickWidth = 80;
@@ -22,6 +25,7 @@ const brickHeight = 20;
 const brickPadding = 10;
 const brickOffSetTop = 40;
 const brickOffSetLeft = brickWidth;
+
 let score = 0;
 let lives = 3;
 let bricks=[];
@@ -61,36 +65,6 @@ function drawBricks()
 			}
 
 		}
-	}
-}
-
-function keyDownHandler(e)
-{
-	// Right button
-	if (e.keyCode == 39 || e.keyCode == 68)
-	{
-		rightPressed = true;
-	}
-	
-	// Left button
-	if (e.keyCode == 37 || e.keyCode == 65)
-	{
-		leftPressed = true;
-	}
-}
-
-function keyUpHandler(e)
-{
-	// Right button
-	if(e.keyCode == 39 || e.keyCode == 68)
-	{
-		rightPressed = false;
-	}
-	
-	// Left button
-	if (e.keyCode == 37 || e.keyCode == 65)
-	{
-		leftPressed = false;
 	}
 }
 
@@ -231,6 +205,36 @@ function drawLives()
 	ctx.font="14px Courier new";
 	ctx.fillStyle="#e0bb00";
 	ctx.fillText(lives + " Lives", canvas.width - brickOffSetLeft + 20, brickOffSetTop - 10);
+}
+
+function keyDownHandler(e)
+{
+	// Right button
+	if (e.keyCode == 39 || e.keyCode == 68)
+	{
+		rightPressed = true;
+	}
+	
+	// Left button
+	if (e.keyCode == 37 || e.keyCode == 65)
+	{
+		leftPressed = true;
+	}
+}
+
+function keyUpHandler(e)
+{
+	// Right button
+	if(e.keyCode == 39 || e.keyCode == 68)
+	{
+		rightPressed = false;
+	}
+	
+	// Left button
+	if (e.keyCode == 37 || e.keyCode == 65)
+	{
+		leftPressed = false;
+	}
 }
 
 function draw()

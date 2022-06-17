@@ -62,12 +62,17 @@ const brickOffSetTop = 40;
 const brickOffSetLeft = brickWidth;
 
 let score = 0;
+let maxScore = score;
 let lives = 3;
 let bricks=[];
 
 let pixelOffset = 1;
 
 let isPaused = false;
+
+let brickColor = '#8F00FF';
+let paddleColor = '#e0bb00';
+let ballColor = '#e0bb00';
 
 function playDeath()
 {
@@ -98,6 +103,50 @@ function playWallCollision()
 	{
 		let wallCollisionSFX = new Audio('audio/wall-collision.mp3');
 		wallCollisionSFX.play();
+	}
+}
+
+function reset()
+{
+	if (lives <= 0) // Death
+	{
+		x = canvas.width / 2;
+		y = canvas.height - 30;
+		dx = 2;
+		dy = -2;
+		score = 0;
+		lives = 3;
+
+		// Re-enable the bricks
+		for(c = 0; c < brickColumnCount; c++)
+		{
+			for(r = 0; r < brickRowCount; r++)
+			{
+				if(bricks[c][r].status == 0)
+				{
+					bricks[c][r].status = 1;
+					let brickX = (c * (brickWidth + brickPadding) + brickOffSetLeft);
+					let brickY = (r * (brickHeight + brickPadding) + brickOffSetTop);
+					bricks[c][r].x = brickX;
+					bricks[c][r].y = brickY;
+					
+					ctx.beginPath();
+					ctx.rect(brickX,brickY,brickWidth,brickHeight);
+					ctx.fillStyle=brickColor;
+					ctx.fill();
+					ctx.closePath();
+				}
+			}
+		}
+	}
+	
+	if (lives > 0) // Normal reset
+	{
+		x = canvas.width / 2;
+		y = canvas.height - 30;
+		dx = 2;
+		dy = -2;
+		score = 0;
 	}
 }
 
@@ -143,7 +192,7 @@ function collisonDetection()
 					if(brickColumnCount * brickRowCount == score)
 					{
 						playDeath();
-						document.location.reload();
+						reset();
 					}
 
 				}
@@ -159,7 +208,7 @@ function collisonDetection()
 					if(brickColumnCount * brickRowCount == score)
 					{
 						playDeath();
-						document.location.reload();
+						reset();
 					}
 				}		
 
@@ -174,7 +223,7 @@ function collisonDetection()
 					if(brickColumnCount * brickRowCount == score)
 					{
 						playDeath();
-						document.location.reload();
+						reset();
 					}
 				}	
 
@@ -189,7 +238,7 @@ function collisonDetection()
 					if(brickColumnCount * brickRowCount == score)
 					{
 						playDeath();
-						document.location.reload();
+						reset();
 					}
 				}			
 			}
@@ -200,12 +249,8 @@ function collisonDetection()
 	if (y + dy > canvas.height + paddleHeight + (ballRadius * 2))
 	{
 		lives--;
-		playDeath();
-
-		x = canvas.width / 2;
-		y = canvas.height - 30;
-		dx = 2;
-		dy = -2;
+		playDeath();	
+		reset();
 	}
 
 	// Paddle collision with Wall
@@ -250,7 +295,7 @@ function drawBricks()
 				
 				ctx.beginPath();
 				ctx.rect(brickX,brickY,brickWidth,brickHeight);
-				ctx.fillStyle="#8F00FF";
+				ctx.fillStyle=brickColor;
 				ctx.fill();
 				ctx.closePath();
 			}
@@ -263,7 +308,7 @@ function drawBall()
 {
 	ctx.beginPath();
 	ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-	ctx.fillStyle="#e0bb00";
+	ctx.fillStyle=ballColor;
 	ctx.fill();
 	ctx.closePath();
 }
@@ -272,23 +317,26 @@ function drawPaddle()
 {
 	ctx.beginPath();
 	ctx.rect(paddleX, canvas.height - (paddleHeight), paddleWidth, paddleHeight);
-	ctx.fillStyle="#e0bb00";
+	ctx.fillStyle=paddleColor;
 	ctx.fill();
 	ctx.closePath();
 }
 
 function drawScore()
 {
-	ctx.font="14px Courier new";
-	ctx.fillStyle="#e0bb00";
-	ctx.fillText("Score: " + score, brickOffSetLeft, brickOffSetTop - 10);
+	spanScore = document.getElementById('score').innerHTML = score;
+
+}
+
+function drawMaxScore()
+{
+	spanScore = document.getElementById('max_score').innerHTML = maxScore;
+
 }
 
 function drawLives()
 {
-	ctx.font="14px Courier new";
-	ctx.fillStyle="#e0bb00";
-	ctx.fillText(lives + " Lives", canvas.width - brickOffSetLeft + 20, brickOffSetTop - 10);
+	spanScore = document.getElementById('lives').innerHTML = lives;
 }
 
 function keyDownHandler(e)
@@ -331,23 +379,27 @@ function keyUpHandler(e)
 
 function draw()
 {
+	maxScore = score > maxScore ? score : maxScore;
+
 	if (isPaused)
 		return;
-
+	
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 	drawBricks();
 	drawLives();
 	drawBall();
 	drawPaddle();
 	drawScore();
+	drawMaxScore();
 	collisonDetection();
 
+	// Update the mute bool based on the checkbox
 	mute = document.getElementById('muteCanvasCheckbox').checked;
-	console.log(mute);
+
 	// Check if the player is dead
 	if(lives <= 0)
 	{
-		document.location.reload();
+		reset();
 	}
 
 	x += dx;

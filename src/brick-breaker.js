@@ -36,6 +36,9 @@
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 
+document.addEventListener("keydown", keyDownHandler);
+document.addEventListener("keyup", keyUpHandler);
+
 let x = canvas.width / 2;
 let y = canvas.height - 30;
 let dx = 2;
@@ -63,7 +66,6 @@ let bricks=[];
 
 let pixelOffset = 1;
 
-// Sound effects
 function playDeath()
 {
 	let deathSFX = new Array('audio/death.mp3', 'audio/death2.mp3');
@@ -85,60 +87,6 @@ function playWallCollision()
 {
 	let wallCollisionSFX = new Audio('audio/wall-collision.mp3');
 	wallCollisionSFX.play();
-}
-
-document.addEventListener("keydown", keyDownHandler);
-document.addEventListener("keyup", keyUpHandler);
-
-for(c = 0; c < brickColumnCount; c++)
-{
-	bricks[c] = [];
-	for(r = 0; r < brickRowCount; r++)
-	{
-		bricks[c][r] = {x:0, y:0, status:1};
-	}
-}
-
-function drawBricks()
-{
-	for(c = 0; c < brickColumnCount; c++)
-	{
-		for(r = 0; r < brickRowCount; r++)
-		{
-			if(bricks[c][r].status == 1)
-			{
-				let brickX = (c * (brickWidth + brickPadding) + brickOffSetLeft);
-				let brickY = (r * (brickHeight + brickPadding) + brickOffSetTop);
-				bricks[c][r].x = brickX;
-				bricks[c][r].y = brickY;
-				
-				ctx.beginPath();
-				ctx.rect(brickX,brickY,brickWidth,brickHeight);
-				ctx.fillStyle="#8F00FF";
-				ctx.fill();
-				ctx.closePath();
-			}
-
-		}
-	}
-}
-
-function drawBall()
-{
-	ctx.beginPath();
-	ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-	ctx.fillStyle="#e0bb00";
-	ctx.fill();
-	ctx.closePath();
-}
-
-function drawPaddle()
-{
-	ctx.beginPath();
-	ctx.rect(paddleX, canvas.height - (paddleHeight), paddleWidth, paddleHeight);
-	ctx.fillStyle="#e0bb00";
-	ctx.fill();
-	ctx.closePath();
 }
 
 function collisonDetection()
@@ -264,6 +212,57 @@ function collisonDetection()
 		playBrickCollision();
 		dy -= dy + 2;
 	}
+}
+
+for(c = 0; c < brickColumnCount; c++)
+{
+	bricks[c] = [];
+	for(r = 0; r < brickRowCount; r++)
+	{
+		bricks[c][r] = {x:0, y:0, status:1};
+	}
+}
+
+function drawBricks()
+{
+	for(c = 0; c < brickColumnCount; c++)
+	{
+		for(r = 0; r < brickRowCount; r++)
+		{
+			if(bricks[c][r].status == 1)
+			{
+				let brickX = (c * (brickWidth + brickPadding) + brickOffSetLeft);
+				let brickY = (r * (brickHeight + brickPadding) + brickOffSetTop);
+				bricks[c][r].x = brickX;
+				bricks[c][r].y = brickY;
+				
+				ctx.beginPath();
+				ctx.rect(brickX,brickY,brickWidth,brickHeight);
+				ctx.fillStyle="#8F00FF";
+				ctx.fill();
+				ctx.closePath();
+			}
+
+		}
+	}
+}
+
+function drawBall()
+{
+	ctx.beginPath();
+	ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+	ctx.fillStyle="#e0bb00";
+	ctx.fill();
+	ctx.closePath();
+}
+
+function drawPaddle()
+{
+	ctx.beginPath();
+	ctx.rect(paddleX, canvas.height - (paddleHeight), paddleWidth, paddleHeight);
+	ctx.fillStyle="#e0bb00";
+	ctx.fill();
+	ctx.closePath();
 }
 
 function drawScore()

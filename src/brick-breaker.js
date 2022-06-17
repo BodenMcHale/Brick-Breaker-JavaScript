@@ -69,8 +69,6 @@ let pixelOffset = 1;
 
 let isPaused = false;
 
-//let mute = document.getElementById('muteCanvasCheckbox').checked;
-
 function playDeath()
 {
 	if (!mute)

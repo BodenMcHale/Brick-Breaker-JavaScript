@@ -21,7 +21,8 @@
 	
     Future Modifications
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    - Random angle on start
+	- Pretty Visuals
+	- Proper box centering
     - More sfx
 	- Bug: If the ball goes under the paddle it pops back up
 

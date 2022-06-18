@@ -1,23 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Brick Breaker</title>
-    </head>
-    <body bgcolor="#000000">
-        <div>
+<html>
+	<head>
+		<title>Brick Breaker</title>
+		<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+		<meta charset="UTF-8">
+
+		<style>
+
+            h1 {text-align: center;}
+            p {text-align: center;}
+            div {text-align: center;}
+
+			html, body 
+			{
+				height: 100%;
+				margin: 0;
+			}
+
+			body 
+			{
+				background: rgb(0, 0, 0);
+				color: rgb(255, 255, 255);
+			}
+
+            .game
+            {
+                width: 600px;
+                height: 480px;
+                position: absolute;
+                border: 3px solid rgb(255, 255, 0);
+                margin: auto;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 340px;
+            }
+
+            .content
+            {
+                width: 600px;
+                height: 0;
+                position: absolute;
+                margin: auto;
+                left: 0;
+                right: 0;
+                top: 180px;
+                bottom: 0;
+                
+            }
+		</style>
+	</head>
+
+	<body>
+        <section class="game">
             <canvas id="canvas1" width="600px" height="480px"></canvas>
             <script src="brick-breaker.js"></script>
-        </div>
-        <div id="contents" style="position:relative; padding-bottom:1px; padding-left:10px">
-            <a href="https://www.lostrabbitdigital.com" style="font-family: 'Courier New', Courier, monospace;">Lost Rabbit Digital</a>
-            <p style="font-family: 'Courier New', Courier, monospace;">Move with the Arrow Keys or A/D</p>
-            <p style="font-family: 'Courier New', Courier, monospace;">Pause and resume with 'Enter'</p>
-            <input type="checkbox" id="muteCanvasCheckbox" name="muteCanvas" value="mute">
-            <label for="loopCanvas" style="font-family:'Courier New', Courier, monospace;"> Mute</label><br>
-            <h3 style="font-family: 'Courier New', Courier, monospace;">Score: <span id="score"></span> </h3>
-            <h3 style="font-family: 'Courier New', Courier, monospace;">Max score: <span id="max_score"></span> </h3>
-            <h3 style="font-family: 'Courier New', Courier, monospace;">Lives: <span id="lives"></span> </h3>
-        </div>
-    </body>
+        </section>
+
+		<section class="content">
+			<div>
+				<a href="https://www.lostrabbitdigital.com" style="font-family: 'Courier New', Courier, monospace;">Lost Rabbit Digital</a>
+				
+				<h3 style="font-family: 'Courier New', Courier, monospace;">Score: <span id="score"></span> </h3>
+				<h3 style="font-family: 'Courier New', Courier, monospace;">High score: <span id="max_score"></span> </h3>
+				<h3 style="font-family: 'Courier New', Courier, monospace;">Lives: <span id="lives"></span> </h3>
+	
+				<p style="font-family: 'Courier New', Courier, monospace;">Move with the Arrow Keys / WASD</p>
+				<p style="font-family: 'Courier New', Courier, monospace;">Pause with 'Enter'</p>
+                <input type="checkbox" id="muteCanvasCheckbox" name="muteCanvas" value="mute">
+                <label for="loopCanvas" style="font-family:'Courier New', Courier, monospace;"> Mute</label><br>
+			</div>
+		</section>
+	</body>
 </html>

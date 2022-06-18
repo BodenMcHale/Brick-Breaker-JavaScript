@@ -25,6 +25,9 @@
 	- Proper box centering
     - More sfx
 	- Bug: If the ball goes under the paddle it pops back up
+	- Properly center bricks
+	- Different colors for the layers of bricks
+	- White ball
 
     Author
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -217,6 +220,7 @@ function collisonDetection()
 		dx -= dx + 2;
 		playWallCollision();
 	}
+
 	// Collision with left wall
 	if (x + dx < ballRadius)
 	{

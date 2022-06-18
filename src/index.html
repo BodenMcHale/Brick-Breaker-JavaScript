@@ -2,8 +2,18 @@
 <html>
 	<head>
 		<title>Brick Breaker</title>
-		<link rel="icon" type="image/x-icon" href="images/favicon.ico">
 		<meta charset="UTF-8">
+		
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="apple-mobile-web-app-title" content="Brick Breaker">
+        <meta name="application-name" content="Brick Breaker">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
 
 		<style>
 
@@ -25,8 +35,8 @@
 
             .game
             {
-                width: 600px;
-                height: 480px;
+                width: 800px;
+                height: 500px;
                 position: absolute;
                 border: 3px solid rgb(255, 255, 0);
                 margin: auto;
@@ -53,7 +63,7 @@
 
 	<body>
         <section class="game">
-            <canvas id="canvas1" width="600px" height="480px"></canvas>
+            <canvas id="canvas1" width="800px" height="500px"></canvas>
             <script src="brick-breaker.js"></script>
         </section>
 

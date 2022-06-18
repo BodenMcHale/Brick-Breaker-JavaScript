@@ -26,8 +26,9 @@
     - More sfx
 	- Bug: If the ball goes under the paddle it pops back up
 	- Properly center bricks
-	- Different colors for the layers of bricks
+	- Different colors for the layers of bricks Orange, Yellow, Green, Blue
 	- White ball
+	- White paddle
 
     Author
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,29 +53,35 @@ const paddleHeight = 10;
 const paddleWidth = 80;
 let paddleX = (canvas.width - paddleWidth) / 2;
 let paddleY = (canvas.height - paddleHeight) / 2;
+
 let rightPressed = false;
 let leftPressed = false;
 
-const brickRowCount = 8;
-const brickColumnCount = 6;
-const brickWidth = 80;
+const brickRowCount = 10;
+const brickColumnCount = 11;
+const brickWidth = 60;
 const brickHeight = 20;
-const brickPadding = 10;
-const brickOffSetTop = 40;
-const brickOffSetLeft = brickWidth;
+const brickPadding = 8;
+const brickOffSetTop = 30;
+const brickOffSetLeft = 30;
 
 let score = 0;
 let maxScore = score;
 let lives = 3;
 let bricks=[];
 
+// Used to visually clean up the collisions 
 let pixelOffset = 1;
 
 let isPaused = false;
 
-let brickColor = '#8F00FF';
-let paddleColor = '#e0bb00';
-let ballColor = '#e0bb00';
+let brickColor1 = `rgb(255, 100, 0)`;
+let brickColor2 = `rgb(255, 255, 0)`;
+let brickColor3 = `rgb(30, 255, 0)`;
+let brickColor4 = `rgb(0, 255, 255)`;
+
+let paddleColor = `rgb(255, 255, 255)`;
+let ballColor = `rgb(255, 255, 255)`;
 
 // Randomise the direction of the ball at the start of the game
 setBallDirection();
@@ -136,7 +143,7 @@ function reset()
 					
 					ctx.beginPath();
 					ctx.rect(brickX,brickY,brickWidth,brickHeight);
-					ctx.fillStyle=brickColor;
+					ctx.fillStyle=brickColor1;
 					ctx.fill();
 					ctx.closePath();
 				}
@@ -333,7 +340,7 @@ function drawBricks()
 				
 				ctx.beginPath();
 				ctx.rect(brickX,brickY,brickWidth,brickHeight);
-				ctx.fillStyle=brickColor;
+				ctx.fillStyle=brickColor1;
 				ctx.fill();
 				ctx.closePath();
 			}

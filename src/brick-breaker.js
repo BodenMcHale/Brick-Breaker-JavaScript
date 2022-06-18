@@ -21,8 +21,8 @@
 	
     Future Modifications
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	- Pretty Visuals
-	- Proper box centering
+    - Pretty Visuals
+    - Proper box centering
     - More sfx
 	- Bug: If the ball goes under the paddle it pops back up
 	- Properly center bricks

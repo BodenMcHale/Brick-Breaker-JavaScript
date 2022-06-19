@@ -29,6 +29,9 @@
 	- Different colors for the layers of bricks Orange, Yellow, Green, Blue
 	- White ball
 	- White paddle
+	- White border
+	- Format code
+	- Comment code
 
     Author
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -51,6 +54,7 @@ const ballRadius = 5;
 
 const paddleHeight = 10;
 const paddleWidth = 80;
+const paddleOffSetBottom = 5;
 let paddleX = (canvas.width - paddleWidth) / 2;
 let paddleY = (canvas.height - paddleHeight) / 2;
 
@@ -189,7 +193,7 @@ function setBallDirectionNegative()
 
 function collisonDetection()
 {
-	// Paddle collision with Ball
+	// Collision with Paddle
 	if(x > paddleX && x < paddleX + paddleWidth && y + dy > canvas.height - paddleHeight - ballRadius - pixelOffset)
 	{
 		playBrickCollision();
@@ -213,7 +217,7 @@ function collisonDetection()
 		playWallCollision();
 	}
 
-	// Ball collision with bottom of screen
+	// Collision with bottom of screen
 	if (y + dy > canvas.height + paddleHeight + (ballRadius * 2))
 	{			
 		lives--;
@@ -361,7 +365,7 @@ function drawBall()
 function drawPaddle()
 {
 	ctx.beginPath();
-	ctx.rect(paddleX, canvas.height - (paddleHeight), paddleWidth, paddleHeight);
+	ctx.rect(paddleX, canvas.height - (paddleHeight) - paddleOffSetBottom, paddleWidth, paddleHeight);
 	ctx.fillStyle=paddleColor;
 	ctx.fill();
 	ctx.closePath();

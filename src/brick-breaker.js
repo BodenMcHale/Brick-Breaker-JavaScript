@@ -212,14 +212,14 @@ function collisonDetection()
 	}
 
 	// Collision with ceiling
-	if (y + dy < ballRadius)
+	if (y + dy <= ballRadius)
 	{
 		dy -= dy - 2;
 		playWallCollision();
 	}
 
 	// Collision with bottom of screen
-	if (y + dy > canvas.height + paddleHeight + (ballRadius * 2))
+	if (y + dy >= canvas.height + paddleHeight + (ballRadius * 2))
 	{			
 		lives--;
 		playDeath();	
@@ -227,14 +227,14 @@ function collisonDetection()
 	}
 
 	// Collision with right wall
-	if (x + dx > canvas.width - ballRadius)
+	if (x + dx >= canvas.width - ballRadius)
 	{	
 		dx -= dx + 2;
 		playWallCollision();
 	}
 
 	// Collision with left wall
-	if (x + dx < ballRadius)
+	if (x + dx <= ballRadius)
 	{
 		dx -= dx - 2;
 		playWallCollision();
@@ -250,7 +250,7 @@ function collisonDetection()
 			if(b.status == 1)
 			{
 				// Bottom 
-				if(x + dx > b.x && x + dx < b.x + brickWidth && y + dy > b.y && y + dy < b.y + brickHeight + ballRadius + pixelOffset)
+				if(x + dx >= b.x && x + dx <= b.x + brickWidth && y + dy >= b.y && y + dy <= b.y + brickHeight + ballRadius + pixelOffset)
 				{
 					dy -= dy - 2;
 					b.status = 0;
@@ -266,7 +266,7 @@ function collisonDetection()
 				}
 
 				// Top
-				if(x + dx > b.x && x + dx < b.x + brickWidth && y + dy > b.y - ballRadius - pixelOffset && y + dy < b.y + brickHeight)
+				if(x + dx >= b.x && x + dx <= b.x + brickWidth && y + dy >= b.y - ballRadius - pixelOffset && y + dy <= b.y + brickHeight)
 				{
 					dy -= dy + 2;
 					b.status = 0;
@@ -281,7 +281,7 @@ function collisonDetection()
 				}		
 
 				// Left
-				if(x + dx > b.x - ballRadius - pixelOffset && x + dx < b.x + brickWidth && y + dy > b.y && y + dy < b.y + brickHeight)
+				if(x + dx >= b.x - ballRadius - pixelOffset && x + dx <= b.x + brickWidth && y + dy >= b.y && y + dy < b.y + brickHeight)
 				{
 					dx -= dx + 2;
 					b.status = 0;
@@ -296,7 +296,7 @@ function collisonDetection()
 				}	
 
 				// Right
-				if(x + dx > b.x && x + dx < b.x + brickWidth + ballRadius + pixelOffset && y + dy > b.y && y + dy < b.y + brickHeight)
+				if(x + dx >= b.x && x + dx <= b.x + brickWidth + ballRadius + pixelOffset && y + dy >= b.y && y + dy < b.y + brickHeight)
 				{
 					dx -= dx - 2;
 					b.status = 0;

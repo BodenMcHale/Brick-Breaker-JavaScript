@@ -21,15 +21,7 @@
 	
     Future Modifications
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    - Pretty Visuals
-    - Proper box centering
     - More sfx
-	- Bug: If the ball goes under the paddle it pops back up
-	- Properly center bricks
-	- Different colors for the layers of bricks Orange, Yellow, Green, Blue
-	- White ball
-	- White paddle
-	- White border
 	- Format code
 	- Comment code
 
@@ -81,13 +73,19 @@ const pixelOffset = 1;
 let isPaused = false;
 let mute;
 
-const brickColor1 = `rgb(255, 100, 0)`;
-const brickColor2 = `rgb(255, 255, 0)`;
-const brickColor3 = `rgb(30, 255, 0)`;
-const brickColor4 = `rgb(0, 255, 255)`;
+const brickColor1 = '#00FFF2'; // Blue
+const brickColor2 = '#FF000D'; // Light Red
+const brickColor3 = '#00FF1B'; // Green
+const brickColor4 = '#FF00E4'; // Pink
+const brickColor5 = '#ffe800'; // Yellow
+const brickColor6 = '#0027FF'; // Dark Blue
+const brickColor7 = '#FF00C9'; // Pink
+const brickColor8 = '#FF9A00'; // Orange
+let brickColors = [brickColor1, brickColor2, brickColor3, brickColor4, brickColor5, brickColor6, brickColor7, brickColor8];
+let chosenBrickColor;
 
-const paddleColor = `rgb(255, 255, 255)`;
-const ballColor = `rgb(255, 255, 255)`;
+const paddleColor = '#FBFBFB'; // White
+const ballColor = '#FBFBFB';
 
 // Randomise the direction of the ball at the start of the game
 setBallDirection();
@@ -146,10 +144,11 @@ function reset()
 					let brickY = (r * (brickHeight + brickPadding) + brickOffSetTop);
 					bricks[c][r].x = brickX;
 					bricks[c][r].y = brickY;
-					
+
 					ctx.beginPath();
 					ctx.rect(brickX,brickY,brickWidth,brickHeight);
-					ctx.fillStyle=brickColor1;
+					setBrickColor();
+					ctx.fillStyle = chosenBrickColor;
 					ctx.fill();
 					ctx.closePath();
 				}
@@ -335,13 +334,28 @@ for(c = 0; c < brickColumnCount; c++)
 	}
 }
 
+let setBrickColor = (function() 
+{
+	let executed = false;
+	
+	return function()
+	{
+		if (!executed)
+		{
+			executed = true;
+			let chooseRandomColor = Math.floor(Math.random() * brickColors.length);
+			return chosenBrickColor = brickColors[chooseRandomColor];
+		}
+	};
+})();
+
 function drawBricks()
 {
-	for(c = 0; c < brickColumnCount; c++)
+	for (c = 0; c < brickColumnCount; c++)
 	{
-		for(r = 0; r < brickRowCount; r++)
+		for (r = 0; r < brickRowCount; r++)
 		{
-			if(bricks[c][r].status == 1)
+			if (bricks[c][r].status == 1)
 			{
 				let brickX = (c * (brickWidth + brickPadding) + brickOffSetLeft);
 				let brickY = (r * (brickHeight + brickPadding) + brickOffSetTop);
@@ -349,12 +363,12 @@ function drawBricks()
 				bricks[c][r].y = brickY;
 				
 				ctx.beginPath();
-				ctx.rect(brickX,brickY,brickWidth,brickHeight);
-				ctx.fillStyle=brickColor1;
+				ctx.rect(brickX, brickY, brickWidth, brickHeight);
+				setBrickColor();
+				ctx.fillStyle = chosenBrickColor;
 				ctx.fill();
 				ctx.closePath();
 			}
-
 		}
 	}
 }
@@ -363,7 +377,7 @@ function drawBall()
 {
 	ctx.beginPath();
 	ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-	ctx.fillStyle=ballColor;
+	ctx.fillStyle = ballColor;
 	ctx.fill();
 	ctx.closePath();
 }
@@ -372,7 +386,7 @@ function drawPaddle()
 {
 	ctx.beginPath();
 	ctx.rect(paddleX, canvas.height - (paddleHeight) - paddleOffSetBottom, paddleWidth, paddleHeight);
-	ctx.fillStyle=paddleColor;
+	ctx.fillStyle = paddleColor;
 	ctx.fill();
 	ctx.closePath();
 }
@@ -447,6 +461,7 @@ function draw()
 	drawScore();
 	drawMaxScore();
 	collisonDetection();
+
 
 	// Update the mute bool based on the checkbox
 	mute = document.getElementById('muteCanvasCheckbox').checked;

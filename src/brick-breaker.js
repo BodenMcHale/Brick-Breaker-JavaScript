@@ -76,17 +76,17 @@ let lives = 3;
 let bricks=[];
 
 // Used to visually clean up the collisions 
-let pixelOffset = 1;
+const pixelOffset = 1;
 
 let isPaused = false;
 
-let brickColor1 = `rgb(255, 100, 0)`;
-let brickColor2 = `rgb(255, 255, 0)`;
-let brickColor3 = `rgb(30, 255, 0)`;
-let brickColor4 = `rgb(0, 255, 255)`;
+const brickColor1 = `rgb(255, 100, 0)`;
+const brickColor2 = `rgb(255, 255, 0)`;
+const brickColor3 = `rgb(30, 255, 0)`;
+const brickColor4 = `rgb(0, 255, 255)`;
 
-let paddleColor = `rgb(255, 255, 255)`;
-let ballColor = `rgb(255, 255, 255)`;
+const paddleColor = `rgb(255, 255, 255)`;
+const ballColor = `rgb(255, 255, 255)`;
 
 // Randomise the direction of the ball at the start of the game
 setBallDirection();
@@ -250,7 +250,7 @@ function collisonDetection()
 			if(b.status == 1)
 			{
 				// Bottom 
-				if(x + dx > b.x && x + dx < b.x + brickWidth && y + dy > b.y && y + dy < b.y + brickHeight + ballRadius - pixelOffset)
+				if(x + dx > b.x && x + dx < b.x + brickWidth && y + dy > b.y && y + dy < b.y + brickHeight + ballRadius + pixelOffset)
 				{
 					dy -= dy - 2;
 					b.status = 0;
@@ -266,7 +266,7 @@ function collisonDetection()
 				}
 
 				// Top
-				if(x + dx > b.x && x + dx < b.x + brickWidth && y + dy > b.y - ballRadius + pixelOffset && y + dy < b.y + brickHeight)
+				if(x + dx > b.x && x + dx < b.x + brickWidth && y + dy > b.y - ballRadius - pixelOffset && y + dy < b.y + brickHeight)
 				{
 					dy -= dy + 2;
 					b.status = 0;
@@ -281,7 +281,7 @@ function collisonDetection()
 				}		
 
 				// Left
-				if(x + dx > b.x - ballRadius + pixelOffset && x + dx < b.x + brickWidth && y + dy > b.y && y + dy < b.y + brickHeight)
+				if(x + dx > b.x - ballRadius - pixelOffset && x + dx < b.x + brickWidth && y + dy > b.y && y + dy < b.y + brickHeight)
 				{
 					dx -= dx + 2;
 					b.status = 0;
@@ -296,7 +296,7 @@ function collisonDetection()
 				}	
 
 				// Right
-				if(x + dx > b.x && x + dx < b.x + brickWidth + ballRadius - pixelOffset && y + dy > b.y && y + dy < b.y + brickHeight)
+				if(x + dx > b.x && x + dx < b.x + brickWidth + ballRadius + pixelOffset && y + dy > b.y && y + dy < b.y + brickHeight)
 				{
 					dx -= dx - 2;
 					b.status = 0;

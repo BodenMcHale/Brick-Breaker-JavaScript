@@ -51,6 +51,7 @@ let y = canvas.height - 30;
 let dx = 0;
 let dy = -2;
 const ballRadius = 5;
+const borderWidth = 5;
 
 const paddleHeight = 10;
 const paddleWidth = 80;
@@ -313,10 +314,10 @@ function collisonDetection()
 	}
 
 	// Paddle collision with Wall
-	if(rightPressed && paddleX < canvas.width - paddleWidth)
+	if(rightPressed && paddleX < canvas.width - paddleWidth - borderWidth)
 		paddleX += 5;
 	
-	if(leftPressed && paddleX > 0)
+	if(leftPressed && paddleX > 0 + borderWidth)
 		paddleX -= 5;
 }
 

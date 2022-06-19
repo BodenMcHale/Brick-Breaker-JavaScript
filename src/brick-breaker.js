@@ -79,6 +79,7 @@ let bricks=[];
 const pixelOffset = 1;
 
 let isPaused = false;
+let mute;
 
 const brickColor1 = `rgb(255, 100, 0)`;
 const brickColor2 = `rgb(255, 255, 0)`;
@@ -195,20 +196,24 @@ function setBallDirectionNegative()
 function collisonDetection()
 {
 	// Collision with Paddle
-	if(x > paddleX && x < paddleX + paddleWidth && y + dy > canvas.height - paddleHeight - ballRadius - pixelOffset)
+	if(x >= paddleX && x <= paddleX + paddleWidth && y + dy >= canvas.height - paddleHeight - ballRadius - pixelOffset)
 	{
-		playBrickCollision();
-		if (dx < 0)
+		// This fixes the ball reappearing from under the paddle bug
+		if (y + dy < canvas.height - paddleHeight - ballRadius - pixelOffset + paddleHeight)
 		{
-			setBallDirectionNegative();
+			playBrickCollision();
+			if (dx < 0)
+			{
+				setBallDirectionNegative();
+			}
+	
+			if (dx > 0)
+			{
+				setBallDirectionPositive();
+			}
+	
+			dy -= dy + 2;
 		}
-
-		if (dx > 0)
-		{
-			setBallDirectionPositive();
-		}
-
-		dy -= dy + 2;
 	}
 
 	// Collision with ceiling
